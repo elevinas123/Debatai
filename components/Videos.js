@@ -111,15 +111,15 @@ const Videos = (props) => {
 
 
   return (
-    <div className='bg-slate-200 w-full flex flex-col mt-32 ml-32'>
-      <div>
+    <div className='bg-slate-200 w-full flex flex-col mt-32 ml-32 '>
+      <div className='text-center'>
         {`Theme: World is Goood`}
       </div>
       <div className='flex'>
-        <div className=' w-96 m-16' >
+        <div className=' w-96 mr-16' >
           <video ref={otherRef} autoPlay playsInline  className=" "/>
         </div>
-        <div className=' m-16 w-96 ' >
+        <div className='w-96 ' >
           <video ref={myRef} autoPlay playsInline className="" />
         </div>
       </div>
