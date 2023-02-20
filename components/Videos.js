@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import Vid from './Vid';
 
 const socket = io();
 
@@ -104,23 +105,23 @@ const Videos = (props) => {
       });
     };
 
-    
-    myRef.current.srcObject = localStream;
+
     otherRef.current.srcObject = remoteStream;
+    myRef.current.srcObject = localStream;
   };
 
 
   return (
-    <div className='bg-slate-200 w-full flex flex-col mt-32 ml-32 '>
+    <div className='bg-slate-200 w-fit flex flex-col mt-32 ml-32 '>
       <div className='text-center'>
         {`Theme: World is Goood`}
       </div>
       <div className='flex'>
         <div className=' w-96 mr-16' >
-          <video ref={otherRef} autoPlay playsInline  className=" "/>
+          <Vid reference={myRef}/>
         </div>
         <div className='w-96 ' >
-          <video ref={myRef} autoPlay playsInline className="" />
+          <Vid reference={otherRef} />
         </div>
       </div>
     </div>
