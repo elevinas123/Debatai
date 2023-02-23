@@ -4,6 +4,12 @@ const Rooms = new mongoose.Schema({
     free: {
         type: Boolean,
         default: true
+    },
+    id1: {
+        type: String
+    },
+    id2: {
+        type: String
     }
 })
 let Room
