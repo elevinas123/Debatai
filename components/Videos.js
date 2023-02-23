@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import Vid from './Vid';
+import Line from './Line';
+import async from './../functions/localS';
 
 const socket = io();
 
@@ -108,19 +110,19 @@ const Videos = (props) => {
 
     otherRef.current.srcObject = remoteStream;
     myRef.current.srcObject = localStream;
+    console.log(remoteStream)
   };
 
 
   return (
-    <div className='bg-slate-200 w-fit flex flex-col mt-32 ml-32 '>
-      <div className='text-center'>
-        {`Theme: World is Goood`}
-      </div>
+    <div className='bg-slate-200 w-fit flex flex-col mt-48 ml-32 '>
+      
       <div className='flex'>
         <div className=' w-96 mr-16' >
           <Vid reference={myRef}/>
         </div>
-        <div className='w-96 ' >
+        <div className="divider-horizontal bg-black w-4"></div> 
+        <div className='w-96 ml-16' >
           <Vid reference={otherRef} />
         </div>
       </div>

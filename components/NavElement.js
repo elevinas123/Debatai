@@ -1,13 +1,10 @@
 
+import Link  from 'next/link';
 
 const NavElement = (props) => {
 
-console.log(props)
-
     return (
-        <div className="hover:bg-teal-300 mt-3 text-center h-10 font-sans text-lg font-bold">
-            {props.name}
-        </div>
+        <li className="hover-bordered"><Link href={props.link}><div>{props.name}</div></Link></li>
     )
 }
 
