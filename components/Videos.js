@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, createRef } from 'react';
 import Vid from './Vid';
 import { Peer } from 'peerjs';
 import { v4 as uuidv4 } from 'uuid';
@@ -6,7 +6,8 @@ import MyVid from './MyVid';
 
 const Videos = (props) => {
   const myRef = useRef(null);
-  const otherRef = useRef(null);
+  const otherRef = useRef([createRef(), createRef(), createRef(), createRef(), createRef(), createRef(), createRef(), createRef(), createRef()]);
+  let index = 0
   const [audioMuted, setAudioMuted] = useState(false)
   const [videoMuted, setVideoMuted] = useState(false)
   let [localStream, setLocalStream] = useState(null)
@@ -19,9 +20,14 @@ const Videos = (props) => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(id)
+          body: JSON.stringify(
+            {
+              peerId: id,
+              publicRoom: true,
+              roomType: "3v3"
+            }
+          )
         });
-        console.log("ok")
         const conn = await response.json();
         return conn;
       } catch (error) {
@@ -32,21 +38,35 @@ const Videos = (props) => {
 
     const init = async () => {
       const id = uuidv4()
-      const peer = new Peer(id)
+      const peer = new Peer(id, {
+        config: {'iceServers': [
+        {
+          urls: 'stun:stun1.l.google.com:19302'
+        },
+        {
+          urls: 'stun:stun3.l.google.com:19302'
+        },
+        {
+          urls: 'stun:stun4.l.google.com:19302'
+        }
+      ]}}/* Sample servers, please use appropriate ones */)
+      await getMedia()
       peer.on("call", call => {
         call.answer(localStream)
         console.log("bandom")
         handle(call)
       })
       const conn = await fetchConnection(id);
-      await getMedia()
-      if (!conn.free) {
+      peer.on("open", () => {
+        console.log("peeer open")
+      })
+      if (conn.peerId.length>1) {
         console.log(conn)
         try {
-          let call =   peer.call(conn.id1, localStream)
-          console.log("STREAM", localStream)
-          handle(call)
-          console.log(call)
+          for (let i=0; i<conn.peerId.length-1; i++) {
+            let call =   peer.call(conn.peerId[i], localStream)
+            handle(call)
+          }
         } catch (error) {
           console.log(error)
         }
@@ -58,12 +78,13 @@ const Videos = (props) => {
   const getMedia = async () => {
     localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     myRef.current.srcObject = localStream
-    setLocalStream(localStream)
   }
   const handle = (call) => {
+    console.log(call)
     call.on("stream", stream => {
-      otherRef.current.srcObject = stream
-      console.log(call)
+      otherRef.current[index].current.srcObject = stream
+      console.log("STREAM, ", index)
+      index++
     })
     call.on("error", error => console.log(error))
   }
@@ -76,19 +97,25 @@ const Videos = (props) => {
     setVideoMuted(i => !i)
 
   }
+  const disconnect = () => {
+
+  }
   return (
     <div className='bg-slate-200 w-fit flex flex-col mt-48 ml-32 '>
 
-      <div className='flex'>
+      <div className='flex flex-wrap'>
         <div className=' w-96 mr-16' >
           <MyVid reference={myRef} />
           <button onClick={() => muteMic()} className='btn'>mute Audio</button>
           <button onClick={() => muteVideo()} className='btn'>mute Video</button>
+          <button onClick={() => disconnect()} className='btn'>Dicconnect</button>
         </div>
         <div className="divider-horizontal bg-black w-4"></div>
-        <div className='w-96 ml-16' >
-          <Vid reference={otherRef} />
-        </div>
+        {otherRef.current.map(reference => (
+          <div className='w-96 ml-16' >
+            <Vid reference={reference} />
+          </div>
+        ))}
       </div>
     </div>
   );

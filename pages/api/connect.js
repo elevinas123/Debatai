@@ -2,18 +2,21 @@ import Room from '@/database/schema';
 import connectToDB from './connectToDB';
 
 const connect = async (req, res) => {
-  console.log("id", req.body)
+  const roomSizes ={"1v1": 2, "3v3": 6,}
+  console.log("body", req.body)
+  const {peerId, publicRoom, roomType} = req.body
   try {
-    let room = await Room.findOne({ free: true });
+    let room = await Room.findOne({ free: true, roomType: roomType });
     let result
     if (!room) {
-      result = await Room.create({ free: true, id1: req.body});
+      result = await Room.create({ free: true, peerId: [peerId], publicRoom: publicRoom, roomType: roomType});
     } else {
-      result = await Room.findOneAndUpdate({ _id: room["_id"] }, {id2: req.body,  free: false}, {
+      result = await Room.findOneAndUpdate({ _id: room["_id"] }, {peerId: [...room.peerId, peerId], free: room.peerId.length+1>=roomSizes[roomType]?false: true}, {
         new: true,
         runValidators: true,
       })
     }
+    console.log(result)
     res.status(200).json(result);
   } catch (err) {
     console.error(err);

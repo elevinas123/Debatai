@@ -1,15 +1,17 @@
 const mongoose = require("mongoose")
-
+const PeerIdSchema = new mongoose.Schema({ type: String });
 const Rooms = new mongoose.Schema({
     free: {
         type: Boolean,
         default: true
     },
-    id1: {
+    peerId: [String],
+    roomType: {
         type: String
     },
-    id2: {
-        type: String
+    publicRoom: {
+        type: Boolean,
+        default: true
     }
 })
 let Room
