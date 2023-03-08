@@ -12,11 +12,11 @@ const SocketHandler = (req, res) => {
       socket.on('input-change', msg => {
         socket.broadcast.emit('update-input', msg)
       })
-      socket.on("offer", ([id, offer]) => {
-        socket.broadcast.emit(`${id}-offer`, offer)
+      socket.on("offer", ([id ,offerId, offer]) => {
+        socket.broadcast.emit(`${id}-offer`, [offer, offerId])
       })
-      socket.on("answer", ([id, answer]) =>  {
-        socket.broadcast.emit(`${id}-answer`, answer)
+      socket.on("answer", ([id, offerId, answer]) =>  {
+        socket.broadcast.emit(`${offerId}-answer`, answer)
       })
     })
   }

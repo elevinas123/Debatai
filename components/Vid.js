@@ -1,10 +1,10 @@
 
 import { useRef } from 'react';
 
-const Vid = ({reference}) => {
+const Vid = ({reference, team}) => {
     return (
-        <div className='bg-red-600'>
-            <video ref={reference} autoPlay playsInline  className=" p-3 bg-red-600 w-96 "/>
+        <div >
+            <video ref={reference} autoPlay playsInline  className={`w-96 p-3 bg-blue-500`}/>
             
         </div>
     )

@@ -7,7 +7,12 @@ const debate = () => {
 
 
     return(
-        <Play />
+        <div className='flex flex-row flex-wrap'>
+            <Play />
+            <Play />
+            <Play />
+            <Play />
+        </div>
     )
 }
 
