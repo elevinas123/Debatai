@@ -1,7 +1,12 @@
 import Room from '@/database/schema';
-import connectToDB from './connectToDB';
+import Cors from 'cors';
 
+const cors = Cors({
+  origin: 'https://elevinas123.github.io',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+});
 const connect = async (req, res) => {
+  await cors(req, res);
   const roomSizes ={"1v1": 2, "3v3": 6,}
   console.log("body", req.body)
   const {peerId, publicRoom, roomType} = req.body

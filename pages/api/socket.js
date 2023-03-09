@@ -1,6 +1,12 @@
 import { Server } from 'socket.io'
+import Cors from 'cors';
 
-const SocketHandler = (req, res) => {
+const cors = Cors({
+  origin: 'https://elevinas123.github.io',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+});
+  const SocketHandler = async (req, res) => {
+  await cors(req, res);
   if (res.socket.server.io) {
     console.log('Socket is already running')
   } else {
