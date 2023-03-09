@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }) {
   const [need, setNeed] = useState(true)
   if (need) {
     try {
-      fetch("https://elevinas123.github.io/Debatai/api/connectToDB")
+      fetch("/Debatai/api/connectToDB")
       console.log("connectToDB")
     } catch(error) {
       console.log(error)
