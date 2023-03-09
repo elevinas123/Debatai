@@ -10,8 +10,8 @@ export default function Debate (){
       }, [])
 
     return(
-        <div className="w-full">
-            {s?<Videos />:""}
+        <div className=""> 
+            <div>Join random</div>
         </div>
     )
 

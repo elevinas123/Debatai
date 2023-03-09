@@ -8,27 +8,17 @@ const Sidebar = () => {
   const [themeTomorrow, setThemeTomorrow] = useState("Lorem ipsum ist gut fur du")
   const [hovered, setHovered] = useState(false)
   return (
-
-    <div className="menu bg-base-300 w-32 h-screen rounded-box">
-      <Link href="/"><div>Icon</div></Link>
-    <ul className="mt-">
-     <NavElement name={"Debate"} link={"/debate"}/>
-     <NavElement name={"Learn"} link={"/comingsoon"}/>
-     <NavElement name={"Database"} link={"/comingsoon"}/>
-
+  <div className="menu flex flex-col bg-gray-600 rounded-box h-screen p-1 w-16">
+    <ul className="">
+      <li><Link href="/"><img src="https://img.icons8.com/ios/25/null/old-vmware-logo.png"/></Link></li>
+      <li><Link href="/play"><img src="https://img.icons8.com/ios-glyphs/25/null/chat.png"/></Link></li>
     </ul>
-    <ul>
-      <div className="ml-2 mb-5">
-        <div className="stat-title">Today's Debate:</div>
-        <div className="stat-desc">Are people good?</div>
-      </div>
-      <div className="ml-2 mb-5">
-        <div className="stat-title flex flex-wrap w-10">Tomorrow's Debate:</div>
-        <div className="stat-desc">Am I good?</div>
-      </div>
+    <ul className="flex flex-col mt-auto">
+      <li><Link href="/play"><img src="https://img.icons8.com/ios/25/null/settings--v1.png"/></Link></li>
+      <li><Link href="/play"><img src="https://img.icons8.com/ios/25/null/user-female-circle.png"/></Link></li>
     </ul>
     
-</div>
+  </div>
   );
 };
 

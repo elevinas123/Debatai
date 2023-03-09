@@ -29,7 +29,7 @@ const Videos = (props) => {
   useEffect(() => {
     const fetchConnection = async () => {
       try {
-        const response = await fetch('/Debatai/api/connect', {
+        const response = await fetch('/api/connect', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -65,7 +65,7 @@ const Videos = (props) => {
   }, []);
 
   const socketInitializer = async () => {
-    await fetch('/Debatai/api/socket');
+    await fetch('/api/socket');
     
     socket.on('connect', () => {
     });
@@ -80,6 +80,7 @@ const Videos = (props) => {
       console.log("here")
       addAnswer(answer);
     });
+   
   };
 
   const createOffer = async () => {

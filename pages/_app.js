@@ -6,7 +6,7 @@ export default function App({ Component, pageProps }) {
   const [need, setNeed] = useState(true)
   if (need) {
     try {
-      fetch("/Debatai/api/connectToDB")
+      fetch("http://localhost:3000/api/connectToDB")
       console.log("connectToDB")
     } catch(error) {
       console.log(error)
